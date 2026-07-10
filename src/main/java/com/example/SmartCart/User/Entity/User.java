@@ -1,13 +1,11 @@
 package com.example.SmartCart.User.Entity;
 
-
 import com.example.SmartCart.User.enums.Gender;
 import com.example.SmartCart.User.enums.UserRole;
 import com.example.SmartCart.User.enums.UserStatus;
 import com.example.SmartCart.common.Entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,7 +56,6 @@ public class User extends BaseEntity {
     @OneToOne(mappedBy = "user",
             cascade = CascadeType.ALL)
     private SellerProfile sellerProfile;
-
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -9,7 +9,9 @@ import com.example.SmartCart.Products.Service.SellerProductService;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SellerProductServiceImpl implements SellerProductService {
     @Override
     public @Nullable ProductResponse createProduct(CreateProductRequest request) {

@@ -1,18 +1,21 @@
 package com.example.SmartCart.User.Service;
 
-import com.example.SmartCart.User.Dto.User.userUpdateDto;
-import com.example.SmartCart.User.Entity.User;
+import com.example.SmartCart.User.Dto.User.CreateUserDto;
+import com.example.SmartCart.User.Dto.User.UserResponseDto;
+import com.example.SmartCart.User.Dto.User.UserUpdateDto;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUser();
+    List<UserResponseDto> getAllUser();
 
+    UserResponseDto getUserById(long userId);
 
-    List<User> getUserById(long userId);
+    UserResponseDto updateUser(long userId, UserUpdateDto userUpdateDto);
 
-    userUpdateDto updateUser(long userId, userUpdateDto userUpdateDto);
+//    UserResponseDto updateUserPass(long userId, UserUpdateDto userUpdateDto);
 
-    userUpdateDto updateUserPass(long userId, userUpdateDto userUpdateDto);
+    void deleteUser(Long userId);
 
+    UserResponseDto createUser(CreateUserDto dto);
 }

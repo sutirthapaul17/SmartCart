@@ -1,6 +1,6 @@
 package com.example.SmartCart.User.Service;
 
-import com.example.SmartCart.User.Dto.User.PendingSellerDto;
+import com.example.SmartCart.User.Dto.Seller.PendingSellerDto;
 import com.example.SmartCart.User.Dto.User.UserResponseDto;
 
 import java.util.List;
@@ -18,4 +18,6 @@ public interface AdminService {
     List<PendingSellerDto> getPendingSellers();
 
     void approveSeller(Long sellerId);
+
+    void rejectSeller(Long sellerId);
 }

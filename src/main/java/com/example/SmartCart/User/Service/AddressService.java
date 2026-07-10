@@ -8,12 +8,12 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public interface AddressService {
-    List<AddressResponseDto> getAddresses();
+    List<AddressResponseDto> getAddresses(long userId);
 
-    AddressResponseDto addAddress(@Valid AddressRequestDto request);
+    AddressResponseDto addAddress(Long userId, @Valid AddressRequestDto request);
 
-    @Nullable AddressResponseDto updateAddress(Long addressId, @Valid AddressRequestDto request);
+    @Nullable AddressResponseDto updateAddress(Long userId, Long addressId, @Valid AddressRequestDto request);
 
-    void deleteAddress(Long addressId);
+    void deleteAddress(Long userId, Long addressId);
 
 }

@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Size;
 
 public record AddressRequestDto(
 
+        @Size(max = 50)
+        String addressLabel,
+
         @NotBlank(message = "Address line 1 is required")
         @Size(max = 255)
         String addressLine1,

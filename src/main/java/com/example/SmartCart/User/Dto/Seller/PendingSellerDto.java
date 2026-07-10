@@ -1,4 +1,4 @@
-package com.example.SmartCart.User.Dto.User;
+package com.example.SmartCart.User.Dto.Seller;
 
 public record PendingSellerDto(
         Long sellerId,

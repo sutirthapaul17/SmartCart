@@ -16,6 +16,8 @@ public class Address extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private String addressLabel;
+
     private String fullName;
 
     private String phoneNumber;

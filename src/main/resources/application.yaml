@@ -1,6 +1,21 @@
 spring:
   application:
     name: SmartCart
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smartcart
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    show-sql: true
 
 server:
   servlet:

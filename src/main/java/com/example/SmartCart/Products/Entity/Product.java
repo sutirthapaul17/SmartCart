@@ -30,7 +30,7 @@ public class Product extends BaseEntity {
     private Boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "seller_id", nullable = false)
     private SellerProfile seller;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -29,4 +29,7 @@ public class SellerProfile extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private SellerStatus sellerStatus;
+
+    @Column(nullable = false)
+    private String panNumber;
 }
