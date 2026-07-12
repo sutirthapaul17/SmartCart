@@ -1,11 +1,12 @@
 package com.example.SmartCart.Products.Controller;
 
-import com.example.SmartCart.Products.Dto.RequestDto.CreateProductRequest;
+import com.example.SmartCart.Products.Dto.RequestDto.CreateProductRequestDto;
 import com.example.SmartCart.Products.Dto.RequestDto.UpdateProductRequest;
 import com.example.SmartCart.Products.Dto.ResponseDto.ProductDeleteResponse;
 import com.example.SmartCart.Products.Dto.ResponseDto.ProductResponse;
 import com.example.SmartCart.Products.Dto.ResponseDto.SellerProductResponse;
 import com.example.SmartCart.Products.Service.SellerProductService;
+import com.example.SmartCart.common.Handler.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,35 +23,58 @@ public class SellerProductController {
     private final SellerProductService sellerProductService;
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(
-            @Valid @RequestBody CreateProductRequest request) {
+    public ResponseEntity<ApiResponse<ProductResponse>> createProduct(
+            @Valid @RequestBody CreateProductRequestDto request) {
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(sellerProductService.createProduct(request));
+        ProductResponse response = sellerProductService.createProduct(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.<ProductResponse>builder()
+                        .message("Product created successfully.")
+                        .data(response)
+                        .build());
     }
 
-    @GetMapping
-    public ResponseEntity<Page<SellerProductResponse>> getSellerProducts(Pageable pageable) {
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<Page<SellerProductResponse>>> getSellerProducts(
+            Pageable pageable) {
+
+        Page<SellerProductResponse> response =
+                sellerProductService.getSellerProducts(pageable);
 
         return ResponseEntity.ok(
-                sellerProductService.getSellerProducts(pageable));
+                ApiResponse.<Page<SellerProductResponse>>builder()
+                        .message("Products fetched successfully.")
+                        .data(response)
+                        .build());
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductResponse> updateProduct(
+    public ResponseEntity<ApiResponse<ProductResponse>> updateProduct(
             @PathVariable Long productId,
             @Valid @RequestBody UpdateProductRequest request) {
 
+        ProductResponse response =
+                sellerProductService.updateProduct(productId, request);
+
         return ResponseEntity.ok(
-                sellerProductService.updateProduct(productId, request));
+                ApiResponse.<ProductResponse>builder()
+                        .message("Product updated successfully.")
+                        .data(response)
+                        .build());
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<ProductDeleteResponse> deleteProduct(
+    public ResponseEntity<ApiResponse<ProductDeleteResponse>> deleteProduct(
             @PathVariable Long productId) {
 
+        ProductDeleteResponse response =
+                sellerProductService.deleteProduct(productId);
+
         return ResponseEntity.ok(
-                sellerProductService.deleteProduct(productId));
+                ApiResponse.<ProductDeleteResponse>builder()
+                        .message(response.message())
+                        .data(response)
+                        .build());
     }
 }

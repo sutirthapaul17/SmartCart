@@ -1,6 +1,6 @@
 package com.example.SmartCart.Products.Service;
 
-import com.example.SmartCart.Products.Dto.RequestDto.CreateProductRequest;
+import com.example.SmartCart.Products.Dto.RequestDto.CreateProductRequestDto;
 import com.example.SmartCart.Products.Dto.RequestDto.UpdateProductRequest;
 import com.example.SmartCart.Products.Dto.ResponseDto.ProductDeleteResponse;
 import com.example.SmartCart.Products.Dto.ResponseDto.ProductResponse;
@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface SellerProductService {
-    @Nullable ProductResponse createProduct(@Valid CreateProductRequest request);
+    @Nullable ProductResponse createProduct(@Valid CreateProductRequestDto request);
 
 
     @Nullable Page<SellerProductResponse> getSellerProducts(Pageable pageable);

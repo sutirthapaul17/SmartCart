@@ -7,7 +7,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 
-public record CreateProductRequest(
+public record CreateProductRequestDto(
 
         @NotBlank(message = "Product name is required.")
         String name,

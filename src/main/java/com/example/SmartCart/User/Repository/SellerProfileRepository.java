@@ -1,7 +1,10 @@
 package com.example.SmartCart.User.Repository;
 
+import com.example.SmartCart.Products.Entity.Product;
 import com.example.SmartCart.User.Entity.SellerProfile;
 import com.example.SmartCart.User.enums.SellerStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,4 +16,5 @@ public interface SellerProfileRepository extends JpaRepository<SellerProfile, Lo
     boolean existsByUserId(Long userId);
 
     List<SellerProfile> findByStatus(SellerStatus status);
+    Page<Product> findBySellerId(Long sellerId, Pageable pageable);
 }
