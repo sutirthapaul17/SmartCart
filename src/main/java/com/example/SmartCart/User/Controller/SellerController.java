@@ -3,16 +3,20 @@ package com.example.SmartCart.User.Controller;
 
 import com.example.SmartCart.User.Dto.Seller.SellerProfileRequestDto;
 import com.example.SmartCart.User.Dto.Seller.SellerProfileResponseDto;
+import com.example.SmartCart.User.Entity.User;
 import com.example.SmartCart.User.Service.SellerProfileService;
 import com.example.SmartCart.common.Handler.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/seller/profile")
+@PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
 public class SellerController {
 
     private final SellerProfileService sellerProfileService;
@@ -21,7 +25,11 @@ public class SellerController {
     public ResponseEntity<ApiResponse<SellerProfileResponseDto>> registerAsSeller(
             @Valid @RequestBody SellerProfileRequestDto request) {
 
-        Long userId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = user.getId();
         SellerProfileResponseDto response = sellerProfileService.registerAsSeller(userId,request);
 
         return ResponseEntity.ok(
@@ -32,9 +40,13 @@ public class SellerController {
         );
     }
 
-    @GetMapping
+    @GetMapping("/profile")
     public ResponseEntity<ApiResponse<SellerProfileResponseDto>> getSellerProfile() {
-        Long userId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = user.getId();
 
         SellerProfileResponseDto response =
                 sellerProfileService.getSellerProfile(userId);
@@ -50,7 +62,11 @@ public class SellerController {
     @PutMapping
     public ResponseEntity<ApiResponse<SellerProfileResponseDto>> updateSellerProfile(
             @Valid @RequestBody SellerProfileRequestDto request) {
-        Long userId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = user.getId();
 
         SellerProfileResponseDto response =
                 sellerProfileService.updateSellerProfile(userId, request);

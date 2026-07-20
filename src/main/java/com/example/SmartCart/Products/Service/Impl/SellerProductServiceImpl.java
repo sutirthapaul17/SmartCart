@@ -1,6 +1,6 @@
 package com.example.SmartCart.Products.Service.Impl;
 
-import com.example.SmartCart.Mapper.Product.SellerMapper;
+import com.example.SmartCart.Mapper.Product.SellerProductMapper;
 import com.example.SmartCart.Products.Dto.RequestDto.CreateProductRequestDto;
 import com.example.SmartCart.Products.Dto.RequestDto.UpdateProductRequest;
 import com.example.SmartCart.Products.Dto.ResponseDto.ProductDeleteResponse;
@@ -26,7 +26,7 @@ public class SellerProductServiceImpl implements SellerProductService {
     private final ProductRepository productRepo;
     private final CategoryRepository categoryRepo;
     private final SellerProfileRepository sellerRepo;
-    private final SellerMapper sellerMapper;
+    private final SellerProductMapper sellerMapper;
 
     @Override
     public ProductResponse createProduct(CreateProductRequestDto request) {

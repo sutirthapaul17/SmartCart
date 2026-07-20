@@ -21,7 +21,7 @@ public interface ProductMapper {
     ProductResponse toResponse(Product product);
 
     @Mapping(target = "seller",
-            expression = "java(product.getSeller().getBusinessName())")
+            source = "seller.storeName")
     @Mapping(target = "category",
             source = "category.name")
     @Mapping(target = "images",

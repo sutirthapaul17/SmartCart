@@ -61,7 +61,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<PendingSellerDto> getPendingSellers() {
-        return sellerProfileRepo.findByStatus(SellerStatus.PENDING)
+        return sellerProfileRepo.findBysellerStatus(SellerStatus.PENDING)
                 .stream()
                 .map(sellerMapper::toPendingSellerDto)
                 .toList();

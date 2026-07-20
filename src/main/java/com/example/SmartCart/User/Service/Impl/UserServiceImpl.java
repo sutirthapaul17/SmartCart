@@ -12,10 +12,13 @@ import com.example.SmartCart.User.enums.UserStatus;
 import com.example.SmartCart.common.Exception.ConflictException;
 import com.example.SmartCart.common.Exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +27,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -40,6 +44,8 @@ public class UserServiceImpl implements UserService {
             );
         }
         User user = userMapper.toUser(dto);
+
+        user.setPassword(passwordEncoder.encode(dto.password()));
         // Default values
         user.setRole(UserRole.CUSTOMER);
         user.setStatus(UserStatus.ACTIVE);
@@ -73,6 +79,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponseDto updateUser(long userId, UserUpdateDto userUpdateDto) {
 
         User user = userRepo.findById(userId)
@@ -113,4 +120,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
 }

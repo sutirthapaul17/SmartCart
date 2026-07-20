@@ -20,3 +20,8 @@ spring:
 server:
   servlet:
     context-path: /api/v1
+  port: 8080
+
+jwt:
+  secret: jhgjopukhgnolu876767890p0377iyjhj406712u3uerhijkduyvyhjbnmo
+  expiration: 86400000

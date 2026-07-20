@@ -1,6 +1,8 @@
 package com.example.SmartCart.Products.Dto.RequestDto;
 
 
+import com.example.SmartCart.Products.enums.ProductStatus;
+
 import java.math.BigDecimal;
 
 public record UpdateProductRequest(
@@ -15,7 +17,7 @@ public record UpdateProductRequest(
 
         Integer stock,
 
-        Boolean active
+        ProductStatus status
 
 ) {
 }

@@ -15,6 +15,6 @@ public interface SellerProfileRepository extends JpaRepository<SellerProfile, Lo
 
     boolean existsByUserId(Long userId);
 
-    List<SellerProfile> findByStatus(SellerStatus status);
-    Page<Product> findBySellerId(Long sellerId, Pageable pageable);
+    List<SellerProfile> findBysellerStatus(SellerStatus status);
+//    Page<Product> findBySellerId(Long sellerId, Pageable pageable);
 }

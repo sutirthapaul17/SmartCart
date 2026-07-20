@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@PreAuthorize("hasAnyRole('CUSTOMER','SELLER','ADMIN')")
 public class UserController {
 
     private final UserService userService;
@@ -37,37 +40,45 @@ public class UserController {
     }
 
 
-    @GetMapping()
-    public ResponseEntity<ApiResponse<List<UserResponseDto>>> getAllUser(){
-        List<UserResponseDto> users = userService.getAllUser();
-        ApiResponse<List<UserResponseDto>> response = new ApiResponse<>("Users retrieved successfully", users);
+//    @GetMapping()
+//    public ResponseEntity<ApiResponse<List<UserResponseDto>>> getAllUser(){
+//        List<UserResponseDto> users = userService.getAllUser();
+//        ApiResponse<List<UserResponseDto>> response = new ApiResponse<>("Users retrieved successfully", users);
+//
+//        return ResponseEntity.ok(response);
+//    }
 
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/getUser/{userId}")
+    @GetMapping("/getUser")
     public ResponseEntity<ApiResponse<UserResponseDto>> getUserById(
-            @PathVariable long userId
     ){
-        UserResponseDto user = userService.getUserById(userId);
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = user.getId();
+        UserResponseDto userResponse = userService.getUserById(userId);
         ApiResponse<UserResponseDto> response = new ApiResponse<>(
                 "User retrieved successfully",
-                user
+                userResponse
         );
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/update")
     public ResponseEntity<ApiResponse<UserResponseDto>> updateUserProfile(
-            @PathVariable long userId,
             @Valid @RequestBody UserUpdateDto userUpdateDto
     ){
-        UserResponseDto user = userService.updateUser(userId,userUpdateDto);
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = user.getId();
+        UserResponseDto userResponse = userService.updateUser(userId,userUpdateDto);
 
         return ResponseEntity.ok(
                 new ApiResponse<>(
                         "User updated Successfully",
-                        user
+                        userResponse
                 )
         );
     }
@@ -79,10 +90,13 @@ public class UserController {
 //        return userService.updateUserPass(userId,userUpdateDto);
 //    }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiResponse<Void>> deleteUser(
-            @PathVariable Long userId
-    ){
+    @DeleteMapping("/delete")
+    public ResponseEntity<ApiResponse<Void>> deleteUser(){
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = user.getId();
         userService.deleteUser(userId);
 
         return ResponseEntity.ok(

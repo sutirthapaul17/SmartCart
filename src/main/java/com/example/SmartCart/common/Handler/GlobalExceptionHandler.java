@@ -33,6 +33,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(apiError.status()).body(apiError);
     }
 
+    @ExceptionHandler(InvalidJwtException.class)
+    public ResponseEntity<ApiError> handleInvalidJwt(InvalidJwtException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST,ex.getMessage());
+        log.error(apiError.toString(),ex);
+
+        return ResponseEntity.status(apiError.status()).body(apiError);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> handleInputValidationError(MethodArgumentNotValidException ex){

@@ -7,6 +7,7 @@ import com.example.SmartCart.User.Entity.SellerProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface SellerMapper {
@@ -19,10 +20,14 @@ public interface SellerMapper {
                              @MappingTarget SellerProfile seller);
 
     @Mapping(target = "sellerId", source = "id")
-    @Mapping(target = "fullName",
-            expression = "java(sellerProfile.getUser().getFirstName() + \" \" + sellerProfile.getUser().getLastName())")
+    @Mapping(target = "fullName", source = ".", qualifiedByName = "fullName")
     @Mapping(target = "email", source = "user.email")
     @Mapping(target = "businessName", source = "storeName")
     @Mapping(target = "phone", source = "businessPhone")
     PendingSellerDto toPendingSellerDto(SellerProfile seller);
+
+    @Named("fullName")
+    default String fullName(SellerProfile seller) {
+        return seller.getUser().getFirstName() + " " + seller.getUser().getLastName();
+    }
 }

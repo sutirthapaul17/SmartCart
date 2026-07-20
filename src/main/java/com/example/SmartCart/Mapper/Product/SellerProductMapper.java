@@ -7,14 +7,15 @@ import com.example.SmartCart.Products.Dto.ResponseDto.SellerProductResponse;
 import com.example.SmartCart.Products.Entity.Product;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
-public interface SellerMapper {
+@Mapper(
+        componentModel = "spring",
+        builder = @Builder(disableBuilder = true)
+)
+public interface SellerProductMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
     @Mapping(target = "category", ignore = true)
-//    @Mapping(target = "thumbnail", ignore = true)
-//    @Mapping(target = "active", constant = "true")
     Product toEntity(CreateProductRequestDto dto);
 
     @Mapping(target = "category", source = "category.name")
@@ -26,7 +27,6 @@ public interface SellerMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
     @Mapping(target = "category", ignore = true)
-    @Mapping(target = "thumbnail", ignore = true)
     void updateProductFromDto(UpdateProductRequest dto,
                               @MappingTarget Product product);
 }
