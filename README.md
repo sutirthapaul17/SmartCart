@@ -88,20 +88,20 @@ All remaining APIs require authentication.
 
 # 🛠️ Tech Stack
 
-| Technology | Version |
-|------------|---------|
-| Java | 21 |
-| Spring Boot | 4.1.0 |
-| Spring Security | *(Add Version)* |
-| Maven | Latest |
-| PostgreSQL | Latest |
+| Technology | Version              |
+|------------|----------------------|
+| Java | 21                   |
+| Spring Boot | 4.1.0                |
+| Spring Security | *7.1.0*              |
+| Maven | Latest               |
+| PostgreSQL | Latest               |
 | Docker | PostgreSQL Container |
-| Spring Data JPA | ✔ |
-| JWT | ✔ |
-| MapStruct | ✔ |
-| Lombok | ✔ |
-| Bean Validation | ✔ |
-| Swagger UI | ✔ |
+| Spring Data JPA | ✔                    |
+| JWT | ✔                    |
+| MapStruct | ✔                    |
+| Lombok | ✔                    |
+| Bean Validation | ✔                    |
+| Swagger UI | ✔                    |
 
 ---
 
@@ -109,32 +109,50 @@ All remaining APIs require authentication.
 
 ```text
 src/main/java
-├── common
-│   ├── entity
-│   ├── exception
-│   ├── mapper
-│   ├── response
-│   └── utility
-├── user
-│   ├── config
-│   ├── controller
-│   ├── dto
-│   ├── entity
-│   ├── repository
-│   ├── security
-│   └── service
-├── product
-│   ├── controller
-│   ├── dto
-│   ├── entity
-│   ├── repository
-│   └── service
-├── reviewrating
-├── cart
-└── ...
+└── com/example/SmartCart
+    ├── Cart
+    ├── common
+    │   ├── Config
+    │   ├── Entity
+    │   ├── Exception
+    │   └── Handler
+    │
+    ├── Mapper
+    │   ├── Product
+    │   ├── Review
+    │   └── User
+    │
+    ├── Order
+    │
+    ├── Products
+    │   ├── Controller
+    │   ├── Dto
+    │   ├── Entity
+    │   ├── enums
+    │   ├── Repository
+    │   └── Service
+    │
+    ├── ReviewAndRatings
+    │   ├── Controller
+    │   ├── Dto
+    │   ├── Entity
+    │   ├── Repository
+    │   └── Service
+    │
+    ├── User
+    │   ├── Config
+    │   ├── Controller
+    │   ├── Dto
+    │   ├── Entity
+    │   ├── enums
+    │   ├── Filters
+    │   ├── Repository
+    │   ├── Security
+    │   └── Service
+    │
+    └── SmartCartApplication
 ```
-
----
+```
 
 # 🗄️ Database Entities
 
@@ -188,7 +206,7 @@ http://localhost:8080/api/v1
 After starting the application:
 
 ```text
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/api/v1/swagger-ui/index.html
 ```
 
 ---
@@ -205,13 +223,13 @@ http://localhost:8080/swagger-ui/index.html
 ## Clone
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/sutirthapaul17/SmartCart.git
 cd SmartCart
 ```
 
 ## Configure
 
-Update `application.properties` with your PostgreSQL credentials.
+Update `application.properties` or `application.yml` with your PostgreSQL or any other database, jpa, security secret_key related credentials.
 
 ## Run PostgreSQL
 
