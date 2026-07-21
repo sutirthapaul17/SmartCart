@@ -25,3 +25,14 @@ server:
 jwt:
   secret: jhgjopukhgnolu876767890p0377iyjhj406712u3uerhijkduyvyhjbnmo
   expiration: 86400000
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  scalar:
+    enabled: true
+    path: /scalar

@@ -35,16 +35,13 @@ public class SellerProfileServiceImpl implements SellerProfileService {
                         new ResourceNotFoundException("User not found with id: " + userId));
 
         if (sellerProfileRepository.existsByUserId(userId)) {
-            throw new BadRequestException("Seller application already exists.");
+            throw new BadRequestException("Seller application/profile already exists.");
         }
 
         SellerProfile seller = sellerMapper.toEntity(request);
-
         seller.setUser(user);
         seller.setSellerStatus(SellerStatus.PENDING);
-
         SellerProfile savedSeller = sellerProfileRepository.save(seller);
-
         return sellerMapper.toResponseDto(savedSeller);
     }
 
@@ -56,7 +53,6 @@ public class SellerProfileServiceImpl implements SellerProfileService {
                         new ResourceNotFoundException(
                                 "Seller profile not found for user id: " + userId
                         ));
-
         return sellerMapper.toResponseDto(seller);
     }
 

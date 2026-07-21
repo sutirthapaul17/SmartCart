@@ -1,5 +1,7 @@
 package com.example.SmartCart.User.Dto.Seller;
 
+import com.example.SmartCart.User.enums.SellerStatus;
+
 public record SellerProfileResponseDto(
 
         Long id,
@@ -10,6 +12,6 @@ public record SellerProfileResponseDto(
 
         String gstNumber,
 
-        boolean verified
+        SellerStatus status
 ) {
 }

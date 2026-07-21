@@ -17,7 +17,7 @@ public interface ProductMapper {
     @Mapping(target = "category",
             source = "category.name")
     @Mapping(target = "active",
-            expression = "java(product.getStatus().name().equals(\"ACTIVE\"))")
+            source = "status")
     ProductResponse toResponse(Product product);
 
     @Mapping(target = "seller",

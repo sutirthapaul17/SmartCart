@@ -12,11 +12,13 @@ import com.example.SmartCart.Products.Repository.CategoryRepository;
 import com.example.SmartCart.Products.Repository.ProductRepository;
 import com.example.SmartCart.Products.Service.SellerProductService;
 import com.example.SmartCart.User.Entity.SellerProfile;
+import com.example.SmartCart.User.Entity.User;
 import com.example.SmartCart.User.Repository.SellerProfileRepository;
 import com.example.SmartCart.common.Exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,11 +33,14 @@ public class SellerProductServiceImpl implements SellerProductService {
     @Override
     public ProductResponse createProduct(CreateProductRequestDto request) {
 
-        Long sellerId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
 
-        SellerProfile seller = sellerRepo.findById(sellerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Seller not found"));
+        SellerProfile seller = sellerRepo.findByUser(user)
+                .orElseThrow(() -> new ResourceNotFoundException("Seller profile not found"));
+
+        Long sellerId = seller.getId();
 
         Category category = categoryRepo.findById(request.categoryId())
                 .orElseThrow(() ->
@@ -54,7 +59,11 @@ public class SellerProductServiceImpl implements SellerProductService {
     @Override
     public Page<SellerProductResponse> getSellerProducts(Pageable pageable) {
 
-        Long sellerId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long sellerId = user.getId();
 
         return productRepo.findBySeller_Id(sellerId, pageable)
                 .map(sellerMapper::toSellerProductResponse);
@@ -63,7 +72,11 @@ public class SellerProductServiceImpl implements SellerProductService {
     @Override
     public ProductResponse updateProduct(Long productId,
                                          UpdateProductRequest request) {
-        Long sellerId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long sellerId = user.getId();
 
         Product product = productRepo.findByIdAndSeller_Id(productId, sellerId)
                 .orElseThrow(() ->
@@ -88,7 +101,11 @@ public class SellerProductServiceImpl implements SellerProductService {
     @Override
     public ProductDeleteResponse deleteProduct(Long productId) {
 
-        Long sellerId = 1L;
+        User user = (User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long sellerId = user.getId();
         Product product = productRepo.findByIdAndSeller_Id(productId, sellerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Product not found"));

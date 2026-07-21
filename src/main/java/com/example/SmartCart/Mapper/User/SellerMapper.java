@@ -12,8 +12,11 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface SellerMapper {
 
+    @Mapping(target = "panNumber", source = "panNumber")
+    @Mapping(target = "storeDescription", source = "description")
     SellerProfile toEntity(SellerProfileRequestDto dto);
 
+    @Mapping(target = "status", source = "sellerStatus")
     SellerProfileResponseDto toResponseDto(SellerProfile seller);
 
     void updateSellerFromDto(SellerProfileRequestDto dto,

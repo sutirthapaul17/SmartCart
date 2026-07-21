@@ -13,27 +13,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','SELLER','CUSTOMER')")
 public class ProductController {
 
     private final ProductService productService;
-
-    @PostMapping("/create")
-    public ResponseEntity<ApiResponse<ProductResponse>> createProduct(
-            @Valid @RequestBody CreateProductRequestDto dto) {
-
-        ProductResponse response = productService.createProduct(dto);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.<ProductResponse>builder()
-                        .message("Product created successfully.")
-                        .data(response)
-                        .build());
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<ApiResponse<ProductResponse>> createProduct(
+//            @Valid @RequestBody CreateProductRequestDto dto) {
+//
+//        ProductResponse response = productService.createProduct(dto);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED)
+//                .body(ApiResponse.<ProductResponse>builder()
+//                        .message("Product created successfully.")
+//                        .data(response)
+//                        .build());
+//    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<Page<ProductResponse>>> getAllProducts(
@@ -64,7 +65,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<ApiResponse<Page<ProductResponse>>> searchProducts(
             @RequestParam String keyword,
             Pageable pageable,
@@ -82,19 +83,19 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<ApiResponse<ProductDeleteResponse>> deleteProduct(
-            @PathVariable Long productId) {
-
-        ProductDeleteResponse response = productService.delProduct(productId);
-
-        return ResponseEntity.ok(
-                ApiResponse.<ProductDeleteResponse>builder()
-                        .message(response.message())
-                        .data(response)
-                        .build()
-        );
-    }
+//    @DeleteMapping("/{productId}")
+//    public ResponseEntity<ApiResponse<ProductDeleteResponse>> deleteProduct(
+//            @PathVariable Long productId) {
+//
+//        ProductDeleteResponse response = productService.delProduct(productId);
+//
+//        return ResponseEntity.ok(
+//                ApiResponse.<ProductDeleteResponse>builder()
+//                        .message(response.message())
+//                        .data(response)
+//                        .build()
+//        );
+//    }
 
 
 }

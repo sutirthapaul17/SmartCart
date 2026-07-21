@@ -14,6 +14,6 @@ public record SellerProfileRequestDto(
 
         @NotBlank(message = "GST number is required")
         @Size(max = 20)
-        String gstNumber
-) {
+        String gstNumber,
+        String panNumber) {
 }

@@ -1,5 +1,7 @@
 package com.example.SmartCart.Products.Dto.ResponseDto;
 
+import com.example.SmartCart.Products.enums.ProductStatus;
+
 import java.math.BigDecimal;
 
 public record ProductResponse(
@@ -14,7 +16,7 @@ public record ProductResponse(
 
         String category,
 
-        Boolean active
+        ProductStatus active
 
 ) {
 }

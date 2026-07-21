@@ -13,18 +13,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/seller/products")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
 public class SellerProductController {
 
     private final SellerProductService sellerProductService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<ApiResponse<ProductResponse>> createProduct(
             @Valid @RequestBody CreateProductRequestDto request) {
+        System.out.println("Creating product...");
 
         ProductResponse response = sellerProductService.createProduct(request);
 

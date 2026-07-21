@@ -19,6 +19,7 @@ public interface SellerProductMapper {
     Product toEntity(CreateProductRequestDto dto);
 
     @Mapping(target = "category", source = "category.name")
+    @Mapping(target = "active", source = "status")
     ProductResponse toProductResponse(Product product);
 
     SellerProductResponse toSellerProductResponse(Product product);
