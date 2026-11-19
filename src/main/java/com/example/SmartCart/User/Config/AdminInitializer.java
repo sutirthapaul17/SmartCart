@@ -10,6 +10,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 @RequiredArgsConstructor
 public class AdminInitializer implements ApplicationRunner {
@@ -53,7 +55,7 @@ public class AdminInitializer implements ApplicationRunner {
                 .email(email)
                 .phoneNumber(phone)
                 .password(passwordEncoder.encode(password))
-                .role(UserRole.ADMIN)
+                .roles(Set.of(UserRole.ADMIN, UserRole.CUSTOMER))
                 .status(UserStatus.ACTIVE)
                 .emailVerified(true)
                 .deleted(false)

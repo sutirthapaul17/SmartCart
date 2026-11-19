@@ -26,18 +26,18 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping()
-    public ResponseEntity<ApiResponse<UserResponseDto>> createUser(@Valid @RequestBody CreateUserDto dto){
-        UserResponseDto user = userService.createUser(dto);
-
-        ApiResponse<UserResponseDto> response = new ApiResponse<>(
-                "User created successfully",
-                user
-        );
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
-    }
+//    @PostMapping()
+//    public ResponseEntity<ApiResponse<UserResponseDto>> createUser(@Valid @RequestBody CreateUserDto dto){
+//        UserResponseDto user = userService.createUser(dto);
+//
+//        ApiResponse<UserResponseDto> response = new ApiResponse<>(
+//                "User created successfully",
+//                user
+//        );
+//        return ResponseEntity
+//                .status(HttpStatus.CREATED)
+//                .body(response);
+//    }
 
 
 //    @GetMapping()

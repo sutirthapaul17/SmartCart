@@ -10,6 +10,7 @@ import com.example.SmartCart.User.Repository.SellerProfileRepository;
 import com.example.SmartCart.User.Repository.UserRepo;
 import com.example.SmartCart.User.Service.AdminService;
 import com.example.SmartCart.User.enums.SellerStatus;
+import com.example.SmartCart.User.enums.UserRole;
 import com.example.SmartCart.User.enums.UserStatus;
 import com.example.SmartCart.common.Exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,11 @@ public class AdminServiceImpl implements AdminService {
         }
 
         seller.setSellerStatus(SellerStatus.APPROVED);
+
+        User user = seller.getUser();
+
+        // Add SELLER role if not already present
+        user.getRoles().add(UserRole.SELLER);
     }
 
     @Override

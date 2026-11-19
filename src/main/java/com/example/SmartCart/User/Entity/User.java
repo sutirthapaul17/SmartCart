@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -40,9 +42,11 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserRole role;
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private Set<UserRole> roles = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -70,9 +74,9 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(
-                new SimpleGrantedAuthority("ROLE_" + role.name())
-        );
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+                .toList();
     }
 
     @Override

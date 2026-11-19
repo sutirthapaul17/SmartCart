@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(dto.password()));
         // Default values
-        user.setRole(UserRole.CUSTOMER);
+        user.getRoles().add(UserRole.CUSTOMER);
         user.setStatus(UserStatus.ACTIVE);
         user.setDeleted(false);
         user.setEmailVerified(true);

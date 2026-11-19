@@ -2,6 +2,7 @@ package com.example.SmartCart.User.Security;
 
 
 import com.example.SmartCart.User.Entity.User;
+import com.example.SmartCart.User.enums.UserRole;
 import com.example.SmartCart.common.Exception.InvalidJwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -36,9 +37,14 @@ public class AuthUtil implements JwtService{
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
-        if(userDetails instanceof User user){
-            claims.put("userId",user.getId());
-            claims.put("role", user.getRole().name());
+        if (userDetails instanceof User user) {
+            claims.put("userId", user.getId());
+            claims.put(
+                    "roles",
+                    user.getRoles().stream()
+                            .map(UserRole::name)
+                            .toList()
+            );
         }
 
 
