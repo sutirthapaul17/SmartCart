@@ -7,6 +7,8 @@ import com.example.SmartCart.User.Dto.User.UserUpdateDto;
 import com.example.SmartCart.User.Entity.User;
 import com.example.SmartCart.User.Service.UserService;
 import com.example.SmartCart.common.Handler.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @PreAuthorize("hasAnyRole('CUSTOMER','SELLER','ADMIN')")
+@Tag(
+        name = "User Management",
+        description = "APIs for viewing, updating and deleting the authenticated user's account"
+)
 public class UserController {
 
     private final UserService userService;
@@ -48,7 +54,17 @@ public class UserController {
 //        return ResponseEntity.ok(response);
 //    }
 
-    @GetMapping("/getUser")
+    @Operation(
+            summary = "Get My Profile",
+            description = """
+        Retrieves the profile information of the
+        currently authenticated user.
+
+        The user is identified using the JWT token.
+        No user ID needs to be provided in the request.
+        """
+    )
+    @GetMapping("/getuser/me")
     public ResponseEntity<ApiResponse<UserResponseDto>> getUserById(
     ){
         User user = (User) SecurityContextHolder.getContext()
@@ -64,7 +80,8 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update")
+    @Operation(summary = "Update user profile")
+    @PutMapping("/update/me")
     public ResponseEntity<ApiResponse<UserResponseDto>> updateUserProfile(
             @Valid @RequestBody UserUpdateDto userUpdateDto
     ){
@@ -90,7 +107,8 @@ public class UserController {
 //        return userService.updateUserPass(userId,userUpdateDto);
 //    }
 
-    @DeleteMapping("/delete")
+    @Operation(summary = "Delete user profile")
+    @DeleteMapping("/delete/me")
     public ResponseEntity<ApiResponse<Void>> deleteUser(){
         User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication()

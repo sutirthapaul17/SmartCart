@@ -7,6 +7,7 @@ import com.example.SmartCart.Products.Dto.ResponseDto.ProductDetailsResponse;
 import com.example.SmartCart.Products.Dto.ResponseDto.ProductResponse;
 import com.example.SmartCart.Products.Service.ProductService;
 import com.example.SmartCart.common.Handler.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN','SELLER','CUSTOMER')")
+@Tag(
+        name = "Product Catalog",
+        description = "APIs for browsing, searching and viewing products"
+)
 public class ProductController {
 
     private final ProductService productService;

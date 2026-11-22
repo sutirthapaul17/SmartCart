@@ -27,6 +27,9 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "customer_id", nullable = false)
     private User customer;
 
+    @Embedded
+    private OrderAddressSnapshot shippingAddressSnapshot;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipping_address_id", nullable = false)
     private Address shippingAddress;

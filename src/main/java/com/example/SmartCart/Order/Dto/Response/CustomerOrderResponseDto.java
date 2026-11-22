@@ -1,11 +1,9 @@
 package com.example.SmartCart.Order.Dto.Response;
 
-public class CustomerOrderResponseDto {
+public record CustomerOrderResponseDto(
+        String fullName,
 
-    private String fullName;
+        String email,
 
-    private String email;
-
-    private String phoneNumber;
-
-}
+        String phoneNumber
+) {}

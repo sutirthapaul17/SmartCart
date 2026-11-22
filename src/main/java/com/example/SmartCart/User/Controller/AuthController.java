@@ -6,6 +6,8 @@ import com.example.SmartCart.User.Dto.Auth.LoginResponse;
 import com.example.SmartCart.User.Dto.User.CreateUserDto;
 import com.example.SmartCart.User.Service.AuthService;
 import com.example.SmartCart.common.Handler.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@Tag(
+        name = "Authentication",
+        description = "APIs for customer registration and user login"
+)
 public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
+    @Operation(
+            summary = "Login User",
+            description = "Authenticates a user and returns a JWT access token."
+    )
+    @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Login successful"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request data"
+            ),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid email or password"
+            )
+    })
     public ResponseEntity<ApiResponse<LoginResponse>> login(
             @Valid @RequestBody LoginRequest request) {
 

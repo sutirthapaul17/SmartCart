@@ -7,32 +7,33 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderResponseDto {
+public record OrderResponseDto(
+        Long orderId,
 
-    private Long orderId;
+        String orderNumber,
 
-    private String orderNumber;
+        OrderStatus status,
 
-    private OrderStatus status;
+        CustomerOrderResponseDto customer,
 
-    private CustomerOrderResponseDto customer;
+        AddressResponseDto shippingAddress,
 
-    private AddressResponseDto shippingAddress;
+        String phoneNumber,
 
-    private String phoneNumber;
+        List<OrderItemResponseDto> items,
 
-    private List<OrderItemResponseDto> items;
+        BigDecimal subtotal,
 
-    private BigDecimal subtotal;
+        BigDecimal gstRate,
 
-    private BigDecimal gstAmount;
+        BigDecimal gstAmount,
 
-    private BigDecimal deliveryCharge;
+        BigDecimal deliveryCharge,
 
-    private BigDecimal discount;
+        BigDecimal discount,
 
-    private BigDecimal totalAmount;
+        BigDecimal totalAmount,
 
-    private LocalDateTime orderedAt;
+        LocalDateTime orderedAt
 
-}
+){}

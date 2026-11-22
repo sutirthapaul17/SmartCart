@@ -6,6 +6,7 @@ import com.example.SmartCart.User.Dto.Seller.SellerProfileResponseDto;
 import com.example.SmartCart.User.Entity.User;
 import com.example.SmartCart.User.Service.SellerProfileService;
 import com.example.SmartCart.common.Handler.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/seller/profile")
 @PreAuthorize("hasAnyRole('SELLER','CUSTOMER')")
+@Tag(
+        name = "Seller Management",
+        description = "APIs for seller registration, profile management and application status"
+)
 public class SellerController {
 
     private final SellerProfileService sellerProfileService;
 
     @PostMapping("/register")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<ApiResponse<SellerProfileResponseDto>> registerAsSeller(
             @Valid @RequestBody SellerProfileRequestDto request) {
 
@@ -41,6 +47,7 @@ public class SellerController {
     }
 
     @GetMapping("/profile")
+    @PreAuthorize("hasRole('SELLER')")
     public ResponseEntity<ApiResponse<SellerProfileResponseDto>> getSellerProfile() {
         User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication()
@@ -60,6 +67,7 @@ public class SellerController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('SELLER')")
     public ResponseEntity<ApiResponse<SellerProfileResponseDto>> updateSellerProfile(
             @Valid @RequestBody SellerProfileRequestDto request) {
         User user = (User) SecurityContextHolder.getContext()

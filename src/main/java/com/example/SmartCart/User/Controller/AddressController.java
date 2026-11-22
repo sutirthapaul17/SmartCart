@@ -6,6 +6,7 @@ import com.example.SmartCart.User.Dto.Address.AddressResponseDto;
 import com.example.SmartCart.User.Entity.User;
 import com.example.SmartCart.User.Service.AddressService;
 import com.example.SmartCart.common.Handler.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/users/me/address")
 @PreAuthorize("hasAnyRole('CUSTOMER','SELLER','ADMIN')")
+@Tag(
+        name = "Address Management",
+        description = "APIs for managing saved customer delivery addresses"
+)
 public class AddressController {
 
     private final AddressService addressService;

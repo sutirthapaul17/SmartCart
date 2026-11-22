@@ -2,18 +2,16 @@ package com.example.SmartCart.Order.Dto.Response;
 
 import java.math.BigDecimal;
 
-public class OrderItemResponseDto {
+public record OrderItemResponseDto(
+        Long productId,
 
-    private Long productId;
+        String productName,
 
-    private String productName;
+        String productImage,
 
-    private String productImage;
+        Integer quantity,
 
-    private Integer quantity;
+        BigDecimal price,
 
-    private BigDecimal price;
-
-    private BigDecimal totalPrice;
-
-}
+        BigDecimal totalPrice
+) {}

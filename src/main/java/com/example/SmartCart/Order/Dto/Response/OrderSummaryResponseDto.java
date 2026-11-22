@@ -5,18 +5,17 @@ import com.example.SmartCart.Order.Enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OrderSummaryResponseDto {
+public record OrderSummaryResponseDto(
+        Long orderId,
 
-    private Long orderId;
+        String orderNumber,
 
-    private String orderNumber;
+        OrderStatus status,
 
-    private OrderStatus status;
+        Integer totalItems,
 
-    private Integer totalItems;
+        BigDecimal totalAmount,
 
-    private BigDecimal totalAmount;
+        LocalDateTime orderedAt
 
-    private LocalDateTime orderedAt;
-
-}
+){}

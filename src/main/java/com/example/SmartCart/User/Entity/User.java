@@ -1,5 +1,6 @@
 package com.example.SmartCart.User.Entity;
 
+import com.example.SmartCart.Cart.Entity.Cart;
 import com.example.SmartCart.User.enums.Gender;
 import com.example.SmartCart.User.enums.UserRole;
 import com.example.SmartCart.User.enums.UserStatus;
@@ -62,6 +63,14 @@ public class User extends BaseEntity implements UserDetails {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Address> addresses;
+
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private Cart cart;
 
     @OneToOne(mappedBy = "user",
             cascade = CascadeType.ALL)

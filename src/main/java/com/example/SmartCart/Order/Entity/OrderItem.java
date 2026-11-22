@@ -29,6 +29,13 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "seller_id", nullable = false)
     private SellerProfile seller;
 
+    // Product details at the time of purchase
+    @Column(nullable = false, length = 150)
+    private String productName;
+
+    @Column(length = 1000)
+    private String productImage;
+
     @Column(nullable = false)
     private Integer quantity;
 
